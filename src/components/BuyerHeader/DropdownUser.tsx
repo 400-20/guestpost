@@ -5,6 +5,8 @@ import ClickOutside from "@/components/ClickOutside";
 import { Dropdown } from "react-bootstrap";
 import { useRouter } from "next/navigation";
 import { toast } from 'react-hot-toast';
+import { IoMdSwitch } from "react-icons/io";
+import { GrMoney } from "react-icons/gr";
 
 const DropdownUser = () => {
   const router = useRouter()
@@ -126,27 +128,7 @@ const DropdownUser = () => {
                 href="/profile"
                 className="flex w-full items-center gap-2.5 rounded-[7px] p-2.5 text-sm font-medium text-dark-4 duration-300 ease-in-out hover:bg-gray-2 hover:text-dark dark:text-dark-6 dark:hover:bg-dark-3 dark:hover:text-white lg:text-base"
               >
-                <svg
-                  className="fill-current"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 18 18"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M8.99998 0.9375C7.03246 0.9375 5.43748 2.53249 5.43748 4.5C5.43748 6.46751 7.03246 8.0625 8.99998 8.0625C10.9675 8.0625 12.5625 6.46751 12.5625 4.5C12.5625 2.53249 10.9675 0.9375 8.99998 0.9375ZM6.56248 4.5C6.56248 3.15381 7.65378 2.0625 8.99998 2.0625C10.3462 2.0625 11.4375 3.15381 11.4375 4.5C11.4375 5.84619 10.3462 6.9375 8.99998 6.9375C7.65378 6.9375 6.56248 5.84619 6.56248 4.5Z"
-                    fill=""
-                  />
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M8.99998 9.1875C7.26482 9.1875 5.66617 9.58191 4.48157 10.2483C3.31459 10.9047 2.43748 11.8995 2.43748 13.125L2.43743 13.2015C2.43658 14.0729 2.43552 15.1665 3.39479 15.9477C3.86689 16.3321 4.52734 16.6055 5.41964 16.7861C6.31442 16.9672 7.48065 17.0625 8.99998 17.0625C10.5193 17.0625 11.6855 16.9672 12.5803 16.7861C13.4726 16.6055 14.1331 16.3321 14.6052 15.9477C15.5644 15.1665 15.5634 14.0729 15.5625 13.2015L15.5625 13.125C15.5625 11.8995 14.6854 10.9047 13.5184 10.2483C12.3338 9.58191 10.7351 9.1875 8.99998 9.1875ZM3.56248 13.125C3.56248 12.4865 4.02851 11.7939 5.03311 11.2288C6.02008 10.6736 7.42143 10.3125 8.99998 10.3125C10.5785 10.3125 11.9799 10.6736 12.9668 11.2288C13.9714 11.7939 14.4375 12.4865 14.4375 13.125C14.4375 14.1059 14.4072 14.658 13.8948 15.0753C13.6169 15.3016 13.1523 15.5225 12.3571 15.6835C11.5644 15.8439 10.4806 15.9375 8.99998 15.9375C7.51931 15.9375 6.43553 15.8439 5.64282 15.6835C4.84762 15.5225 4.38307 15.3016 4.10517 15.0753C3.59271 14.658 3.56248 14.1059 3.56248 13.125Z"
-                    fill=""
-                  />
-                </svg>
+<GrMoney  className=""/>
                 Balance
               </Link>
             </li>
@@ -155,7 +137,7 @@ const DropdownUser = () => {
                 href="/profile"
                 className="flex w-full items-center gap-2.5 rounded-[7px] p-2.5 text-sm font-medium text-dark-4 duration-300 ease-in-out hover:bg-gray-2 hover:text-dark dark:text-dark-6 dark:hover:bg-dark-3 dark:hover:text-white lg:text-base"
               >
-                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18px" height="18px" viewBox="0 0 122.883 85.208" enable-background="new 0 0 122.883 85.208" ><g><path fill-rule="evenodd" clip-rule="evenodd" d="M122.883,28.086L93.668,0l-0.004,18.078h-26.66h-0.506H41.932v20.019H66.5l0,0 h27.164l0.004,18.08L122.883,28.086L122.883,28.086z M0,57.118l29.215-28.087l0.002,18.078h26.661h0.506h24.567v20.019H56.382l0,0 H29.217l-0.002,18.08L0,57.118L0,57.118z" /></g></svg>
+<IoMdSwitch className="text-xl" />
                 Switch to Publisher
               </Link>
             </li>
@@ -165,7 +147,7 @@ const DropdownUser = () => {
                 href="/profile"
                 className="flex w-full items-center gap-2.5 rounded-[7px] p-2.5 text-sm font-medium text-dark-4 duration-300 ease-in-out hover:bg-gray-2 hover:text-dark dark:text-dark-6 dark:hover:bg-dark-3 dark:hover:text-white lg:text-base"
               >
-                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18px" height="18px" viewBox="0 0 122.883 85.208" enable-background="new 0 0 122.883 85.208" ><g><path fill-rule="evenodd" clip-rule="evenodd" d="M122.883,28.086L93.668,0l-0.004,18.078h-26.66h-0.506H41.932v20.019H66.5l0,0 h27.164l0.004,18.08L122.883,28.086L122.883,28.086z M0,57.118l29.215-28.087l0.002,18.078h26.661h0.506h24.567v20.019H56.382l0,0 H29.217l-0.002,18.08L0,57.118L0,57.118z" /></g></svg>
+<IoMdSwitch className="text-xl" />
                 Switch to affiliate
               </Link>
             </li>

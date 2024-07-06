@@ -5,8 +5,8 @@ import DefaultLayout from "@/components/BuyerLayouts/DefaultLaout";
 import SettingBoxes from "@/components/SettingBoxes";
 
 export const metadata: Metadata = {
-  title: "Next.js Settings Page | NextAdmin - Next.js Dashboard c",
-  description: "This is Next.js Settings page for NextAdmin Dashboard Kit",
+  title:"Guestpostsale Dashboard Page",
+  description: "",
 };
 
 const Settings = () => {
