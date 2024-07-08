@@ -29,27 +29,41 @@ const AllMyProjects = () => {
     <div className='h-[60px] w-full bg-gradient-to-r from-[#2c7be5] to-primary rounded-t-lg justify-between flex items-center px-5'>
         <h4 className='text-white font-medium '>Project Name</h4>
         <h4 className='text-white font-medium flex gap-2'>
-        <Link title="Edit This Project" id="t-1" placement='left'><TbEdit className='text-2xl'/></Link> 
+        <Link title="Edit This Project" id="t-1" placement='top'><TbEdit className='text-2xl'/></Link> 
         <Link title="Delete This Project" id="t-1" placement='top'><MdDeleteOutline className='text-2xl'/></Link></h4>
     </div>
     <div className='h-[60px] w-full bg-white to-primary rounded-t-lg justify-between flex items-center px-5'>
         <h4 className='text-black font-medium '>Guest posting</h4>
         <div className='text-black font-medium flex gap-1'>
-            <div className='h-6 w-6 rounded-md bg-[#d5e5fa] flex items-center justify-center text-sm'><Link title="Number of tasks" id="t-2" placement='top' >0</Link> </div>
-            <div className='h-6 w-6 rounded-md bg-[#e3e6ea] flex items-center justify-center text-sm'><Link title="Number of tasks" id="t-3" placement='top' >0</Link> </div>
-            <div className='h-6 w-6 rounded-md bg-[#d4f2ff] flex items-center justify-center text-sm'><Link title="Number of tasks" id="t-4" placement='top' >0</Link> </div>
-            <div className='h-6 w-6 rounded-md bg-[#fde6d8] flex items-center justify-center text-sm'><Link title="Number of tasks" id="t-5" placement='top' >0</Link> </div>
-            <div className='h-6 w-6 rounded-md bg-[#d5e5fa] flex items-center justify-center text-sm'><Link title="Number of tasks" id="t-6" placement='top' >0</Link> </div>
-            <div className='h-6 w-6 rounded-md bg-[#d5e5fa] flex items-center justify-center text-sm'><Link title="Number of tasks" id="t-7" placement='top' >0</Link> </div>
+            <Link title="Number of tasks not started" id="t-2" placement='top' ><div className='h-6 w-6 rounded-md bg-[#d5e5fa] flex items-center justify-center text-sm'>0</div></Link> 
+            <Link title="Number of tasks in progress" id="t-3" placement='top' ><div className='h-6 w-6 rounded-md bg-[#e3e6ea] flex items-center justify-center text-sm'>0</div></Link> 
+            <Link title="Number of tasks waiting approval" id="t-4" placement='top' ><div className='h-6 w-6 rounded-md bg-[#d4f2ff] flex items-center justify-center text-sm'>0</div></Link> 
+            <Link title="Number of tasks in improvement" id="t-5" placement='top' ><div className='h-6 w-6 rounded-md bg-[#fde6d8] flex items-center justify-center text-sm'>0</div></Link> 
+            <Link title="Number of tasks completed" id="t-6" placement='top' ><div className='h-6 w-6 rounded-md bg-[#ccf6e4] flex items-center justify-center text-sm'>0</div></Link> 
+            <Link title="Number of tasks rejected" id="t-7" placement='top' ><div className='h-6 w-6 rounded-md bg-[#fad7dd] flex items-center justify-center text-sm'>0</div></Link> 
         </div>
     </div>
     <div className='h-[60px] w-full bg-white to-primary rounded-t-lg justify-between flex items-center px-5'>
         <h4 className='text-black font-medium '>Digital PR & SEO</h4>
-        <h4 className='text-black font-medium '>Icons</h4>
+        <div className='text-black font-medium flex gap-1'>
+            <Link title="Number of tasks not started" id="t-2" placement='top' ><div className='h-6 w-6 rounded-md bg-[#d5e5fa] flex items-center justify-center text-sm'>0</div></Link> 
+            <Link title="Number of tasks in progress" id="t-3" placement='top' ><div className='h-6 w-6 rounded-md bg-[#e3e6ea] flex items-center justify-center text-sm'>0</div></Link> 
+            <Link title="Number of tasks waiting approval" id="t-4" placement='top' ><div className='h-6 w-6 rounded-md bg-[#d4f2ff] flex items-center justify-center text-sm'>0</div></Link> 
+            <Link title="Number of tasks in improvement" id="t-5" placement='top' ><div className='h-6 w-6 rounded-md bg-[#fde6d8] flex items-center justify-center text-sm'>0</div></Link> 
+            <Link title="Number of tasks completed" id="t-6" placement='top' ><div className='h-6 w-6 rounded-md bg-[#ccf6e4] flex items-center justify-center text-sm'>0</div></Link> 
+            <Link title="Number of tasks rejected" id="t-7" placement='top' ><div className='h-6 w-6 rounded-md bg-[#fad7dd] flex items-center justify-center text-sm'>0</div></Link> 
+        </div>
     </div>
     <div className='h-[60px] w-full bg-white to-primary rounded-b-lg justify-between flex items-center px-5'>
         <h4 className='text-black font-medium '>Content Writing</h4>
-        <h4 className='text-black font-medium '>Icons</h4>
+        <div className='text-black font-medium flex gap-1'>
+            <Link title="Number of tasks not started" id="t-2" placement='top' ><div className='h-6 w-6 rounded-md bg-[#d5e5fa] flex items-center justify-center text-sm'>0</div></Link> 
+            <Link title="Number of tasks in progress" id="t-3" placement='top' ><div className='h-6 w-6 rounded-md bg-[#e3e6ea] flex items-center justify-center text-sm'>0</div></Link> 
+            <Link title="Number of tasks waiting approval" id="t-4" placement='top' ><div className='h-6 w-6 rounded-md bg-[#d4f2ff] flex items-center justify-center text-sm'>0</div></Link> 
+            <Link title="Number of tasks in improvement" id="t-5" placement='top' ><div className='h-6 w-6 rounded-md bg-[#fde6d8] flex items-center justify-center text-sm'>0</div></Link> 
+            <Link title="Number of tasks completed" id="t-6" placement='top' ><div className='h-6 w-6 rounded-md bg-[#ccf6e4] flex items-center justify-center text-sm'>0</div></Link> 
+            <Link title="Number of tasks rejected" id="t-7" placement='top' ><div className='h-6 w-6 rounded-md bg-[#fad7dd] flex items-center justify-center text-sm'>0</div></Link> 
+        </div>
     </div>
 
 </div>

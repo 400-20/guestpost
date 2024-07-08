@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
   // List of paths that need a logged-in user
-  const protectedPaths = ['/profile','/calendar','/charts','/forms','/login','/pages','/tables'];
+  const protectedPaths = ['/profile','/calendar','/charts','/forms','/login','/pages','/tables','/allmyprojects'];
   const token = request.cookies.get('login_access_token');
   
   // Check if the path is one of the protected ones and there is no token
@@ -19,5 +19,5 @@ export function middleware(request: NextRequest) {
 
 // Apply middleware to these paths, including the public ones for uniformity, but with no action on login and signup
 export const config = {
-  matcher: ['/', '/profile','/signin', '/signup','/auth','/calendar','/charts','/forms','/login','/pages','/tables']
+  matcher: ['/', '/profile','/signin', '/signup','/auth','/calendar','/charts','/forms','/login','/pages','/tables','/allmyprojects']
 };
