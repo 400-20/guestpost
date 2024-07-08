@@ -65,7 +65,7 @@ const menuGroups = [
           </svg>
         ),
         label: "All my projects",
-        route: "",
+        route: "/allmyprojects",
       },
 
       // {

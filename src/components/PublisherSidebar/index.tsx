@@ -55,7 +55,7 @@ const menuGroups = [
 <IoBriefcase  className="text-xl"/>
         ),
         label: "Open Offers",
-        route: "/",
+        route: "",
       },
 
       {
@@ -64,7 +64,7 @@ const menuGroups = [
           
         ),
         label: "Guest Post Tasks",
-        route: "/",
+        route: "",
       },
       {
         icon: (
@@ -72,7 +72,7 @@ const menuGroups = [
           
         ),
         label: "My Platform",
-        route: "/",
+        route: "",
       },
 
 
@@ -294,7 +294,7 @@ const menuGroups = [
           </svg>
         ),
         label: "FAQ",
-        route: "/",
+        route: "",
       },
       //balance
       {
@@ -323,7 +323,7 @@ M11,7v4.586L8.293,14.293a1,1,0,1,0,1.414,1.414l3-3A1,1,0,0,0,13,12V7a1,1,0,0,0-2
           </svg>
         ),
         label: "Activity Log",
-        route: "/",
+        route: "",
       },
       //inviteppl
       {
@@ -331,7 +331,7 @@ M11,7v4.586L8.293,14.293a1,1,0,1,0,1.414,1.414l3-3A1,1,0,0,0,13,12V7a1,1,0,0,0-2
 <IoPersonAdd className="text-xl" />
         ),
         label: "Invite People",
-        route: "/",
+        route: "",
       },
 
     ],
