@@ -1,13 +1,21 @@
 "use client";
 import React, { useState, ReactNode } from "react";
-import Sidebar from "@/components/BuyerSidebar";
-import Header from "@/components/BuyerHeader";
+import BuyerSidebar from "@/components/BuyerSidebar";
+import BuyerHeader from "@/components/BuyerHeader";
+import PublisherSidebar from "@/components/PublisherSidebar";
+import PublisherHeader from "@/components/PublisherHeader";
+import { useLayout } from "@/helpers/LayoutContext";
 
 export default function DefaultLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { isPublisher } = useLayout();
+
+  const Sidebar = isPublisher ? PublisherSidebar : BuyerSidebar;
+  const Header = isPublisher ? PublisherHeader : BuyerHeader;
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <>

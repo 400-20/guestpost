@@ -1,4 +1,3 @@
-
 "use client";
 import Link from "next/link";
 
@@ -234,7 +233,7 @@ export default function Signup() {
           <button
             onClick={handleSubmit}
             type="submit"
-            className={`flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg p-4 font-medium text-white transition ${isButtonDisabled ? "bg-gray-400" : "bg-primary hover:bg-opacity-90"
+            className={`flex w-full ${isButtonDisabled?"cursor-not-allowed" : "cursor-pointer"} items-center justify-center gap-2 rounded-lg p-4 font-medium text-white transition ${isButtonDisabled ? "bg-blue-400" : "bg-primary hover:bg-opacity-90"
               }`}
             disabled={isButtonDisabled}
           >
@@ -245,7 +244,7 @@ export default function Signup() {
         <div className="mt-6 text-center">
           <p>
             Already have an account?{" "}
-            <Link href="/" className="text-primary">
+            <Link href="/signin" className="text-primary">
               Sign In
             </Link>
           </p>

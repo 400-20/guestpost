@@ -1,6 +1,3 @@
-
-
-
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
@@ -8,6 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from 'react-hot-toast';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Cookies from 'js-cookie';
 
 export default function SigninWithPassword() {
   const router = useRouter();
@@ -23,7 +21,7 @@ export default function SigninWithPassword() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+    setShowPassword(!showPassword); 
   };
 
   const areTokensPresent = () => {
@@ -72,14 +70,14 @@ export default function SigninWithPassword() {
 
     try {
       const response = await axios.post("http://172.16.16.22:8000/auth/api/login/", {
-        username: user.username,
+        username: user.username,  
         password: user.password,
       }, {
         headers: {
           "Content-Type": "application/json"
         }
       });
-
+      Cookies.set('login_access_token', response.data.access, { expires: 1, path: '/' });
       localStorage.setItem("login_access_token", response.data.access);
       localStorage.setItem("login_refresh_token", response.data.refresh);
       localStorage.setItem("login_user", JSON.stringify(user));
@@ -189,7 +187,7 @@ export default function SigninWithPassword() {
       <div className="mb-4.5">
         <button
           type="submit"
-          className={`flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg p-4 font-medium text-white transition ${isButtonDisabled ? "bg-gray-400" : "bg-primary hover:bg-opacity-90"
+          className={`flex w-full ${isButtonDisabled ?"cursor-not-allowed" : "cursor-pointer"} items-center justify-center gap-2 rounded-lg p-4 font-medium text-white transition ${isButtonDisabled ? "bg-blue-400" : "bg-primary hover:bg-opacity-90"
             }`}
           disabled={isButtonDisabled}
         >

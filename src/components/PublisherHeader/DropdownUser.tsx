@@ -4,8 +4,10 @@ import Image from "next/image";
 import ClickOutside from "@/components/ClickOutside";
 import { Dropdown } from "react-bootstrap";
 import { useRouter } from "next/navigation";
+import { useLayout } from "@/helpers/LayoutContext";
 
 const DropdownUser = () => {
+  const { toggleLayout } = useLayout();
   const router = useRouter()
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const handleLogout = () => {
@@ -148,6 +150,7 @@ const DropdownUser = () => {
             <li>
               <Link
                 href="/profile"
+                onClick={toggleLayout}
                 className="flex w-full items-center gap-2.5 rounded-[7px] p-2.5 text-sm font-medium text-dark-4 duration-300 ease-in-out hover:bg-gray-2 hover:text-dark dark:text-dark-6 dark:hover:bg-dark-3 dark:hover:text-white lg:text-base"
               >
                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18px" height="18px" viewBox="0 0 122.883 85.208" enable-background="new 0 0 122.883 85.208" ><g><path fill-rule="evenodd" clip-rule="evenodd" d="M122.883,28.086L93.668,0l-0.004,18.078h-26.66h-0.506H41.932v20.019H66.5l0,0 h27.164l0.004,18.08L122.883,28.086L122.883,28.086z M0,57.118l29.215-28.087l0.002,18.078h26.661h0.506h24.567v20.019H56.382l0,0 H29.217l-0.002,18.08L0,57.118L0,57.118z" /></g></svg>
