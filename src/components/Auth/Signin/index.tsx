@@ -5,7 +5,7 @@ import SigninWithPassword from "../SigninWithPassword";
 
 export default function Signin() {
   return (
-<div className="h-[100vh] w-full flex justify-center items-center  ">
+<div className=" w-full flex justify-center items-center  ">
 <div className="h-1/2 w-1/2 ">
 
       <div className="my-6 flex items-center justify-center">

@@ -11,11 +11,12 @@ export default function SigninWithPassword() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({
-    username: "",
+    email: "",
     password: "",
+    username: "",
   });
   const [errors, setErrors] = useState({
-    username: "",
+    email: "",
     password: "",
   });
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -30,12 +31,14 @@ export default function SigninWithPassword() {
     return accessToken !== null && refreshToken !== null;
   };
 
-  const validateUsername = (username: any) => {
-    return username.length >= 3;
+
+  const validateEmail = (email: any) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
   const validatePassword = (password: any) => {
-    return password.length >= 6;
+    return password.length >= 5;
   };
 
   const handleChange = (e: any) => {
@@ -43,16 +46,16 @@ export default function SigninWithPassword() {
     setUser({ ...user, [name]: value });
 
     switch (name) {
-      case "username":
+      case "email":
         setErrors({
           ...errors,
-          username: validateUsername(value) ? "" : "Username must be at least 3 characters long",
+          email: validateEmail(value) ? "" : "Invalid email address",
         });
         break;
       case "password":
         setErrors({
           ...errors,
-          password: validatePassword(value) ? "" : "Password must be at least 6 characters long",
+          password: validatePassword(value) ? "" : "Password must be at least 5 characters long",
         });
         break;
       default:
@@ -61,7 +64,7 @@ export default function SigninWithPassword() {
   };
 
   useEffect(() => {
-    const isFormValid = validateUsername(user.username) && validatePassword(user.password);
+    const isFormValid = validateEmail(user.email) && validatePassword(user.password);
     setIsButtonDisabled(!isFormValid);
   }, [user]);
 
@@ -70,8 +73,9 @@ export default function SigninWithPassword() {
 
     try {
       const response = await axios.post("http://172.16.16.22:8000/auth/api/login/", {
-        username: user.username,  
-        password: user.password,
+        email: user.email,
+        password: user.password,  
+        username:user.username
       }, {
         headers: {
           "Content-Type": "application/json"
@@ -81,10 +85,11 @@ export default function SigninWithPassword() {
       localStorage.setItem("login_access_token", response.data.access);
       localStorage.setItem("login_refresh_token", response.data.refresh);
       localStorage.setItem("login_user", JSON.stringify(user));
+console.log(response.data);
 
       if (areTokensPresent()) {
         toast.success("Login successful");
-        router.push("/profile");
+        router.push("/buyerDashboard");
       } else {
         toast.error("Signup successful");
         console.error("Tokens are missing in localStorage.");
@@ -102,20 +107,20 @@ export default function SigninWithPassword() {
           htmlFor="username"
           className="mb-2.5 block font-medium text-dark dark:text-white"
         >
-          Username
+          E-mail
         </label>
         <div className="relative">
           <input
-            type="text"
-            name="username"
-            value={user.username}
+            type="email"
+            name="email"
+            value={user.email}
             onChange={handleChange}
-            placeholder="Enter your username"
+            placeholder="Enter your E-mail"
             className="w-full rounded-lg border bg-transparent py-[15px] pl-6 pr-11 font-medium text-dark outline-none focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary border-gray-300"
           />
           <div className="min-h-[24px]">
-            {errors.username && (
-              <p className="text-red-500 text-sm mt-1">{errors.username}</p>
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
             )}
           </div>
 

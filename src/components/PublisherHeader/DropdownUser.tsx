@@ -1,18 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import ClickOutside from "@/components/ClickOutside";
 import { Dropdown } from "react-bootstrap";
 import { useRouter } from "next/navigation";
 import { useLayout } from "@/helpers/LayoutContext";
+import { toast } from 'react-hot-toast';
+import Cookies from 'js-cookie';
 
 const DropdownUser = () => {
   const { toggleLayout } = useLayout();
   const router = useRouter()
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
   const handleLogout = () => {
-    router.push("/")
+    window.history.pushState(null, "", window.location.href);
+    window.addEventListener("popstate", () => {
+        window.history.pushState(null, "", window.location.href);
+    });
+    localStorage.clear();
+    sessionStorage.clear();
+    Cookies.remove('login_access_token');
+    localStorage.removeItem("login_access_token");
+    localStorage.removeItem("login_refresh_token");
+    localStorage.removeItem("login_user");
+    toast.success("Logged out successfully");
+    router.push("/");
+    setTimeout(() => {
+      window.location.reload();
+  }, 10);
+
   }
+
+  const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    const loginUser = localStorage.getItem('login_user');
+    if (loginUser) {
+      const user = JSON.parse(loginUser);
+      setEmail(user.email);
+    }
+  }, []);
+
 
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
@@ -36,7 +65,7 @@ const DropdownUser = () => {
         </span>
 
         <span className="flex items-center gap-2 font-medium text-dark dark:text-dark-6">
-          <span className="hidden lg:block">Jhon Smith</span>
+          <span className="hidden lg:block">{email}</span>
 
           <svg
             className={`fill-current duration-200 ease-in ${dropdownOpen && "rotate-180"}`}
@@ -84,7 +113,7 @@ const DropdownUser = () => {
                 Jhon Smith
               </span>
               <span className="block font-medium text-dark-5 dark:text-dark-6">
-                jonson@nextadmin.com
+                {email}
               </span>
             </span>
           </div>
@@ -149,7 +178,7 @@ const DropdownUser = () => {
             </li>
             <li>
               <Link
-                href="/profile"
+                href="/buyerDashboard"
                 onClick={toggleLayout}
                 className="flex w-full items-center gap-2.5 rounded-[7px] p-2.5 text-sm font-medium text-dark-4 duration-300 ease-in-out hover:bg-gray-2 hover:text-dark dark:text-dark-6 dark:hover:bg-dark-3 dark:hover:text-white lg:text-base"
               >

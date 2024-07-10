@@ -21,16 +21,15 @@ const CheckboxOne = () => {
           <div
             className={`mr-2 flex h-5 w-5 items-center justify-center rounded border ${
               isChecked
-                ? "border-primary bg-gray-2 dark:bg-transparent"
+                ? "border-red bg-gray-2 dark:bg-transparent"
                 : "border-dark-5 dark:border-dark-6"
             }`}
           >
             <span
-              className={`h-2.5 w-2.5 rounded-sm ${isChecked && "bg-primary"}`}
+              className={`h-2.5 w-2.5 rounded-sm ${isChecked && "bg-red"}`}
             ></span>
           </div>
         </div>
-        Checkbox Text
       </label>
     </div>
   );

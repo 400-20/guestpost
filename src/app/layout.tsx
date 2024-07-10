@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import Loader from "@/components/common/Loader";
 import { Toaster } from 'react-hot-toast';
 import { LayoutProvider } from "@/helpers/LayoutContext";
+import { CheckedProjectsProvider } from "@/helpers/CheckedProjectsContext";
 
 export default function RootLayout({
   children,
@@ -26,9 +27,11 @@ export default function RootLayout({
     <html lang="en">
       <body suppressHydrationWarning={true}>
       <Toaster />
+      <CheckedProjectsProvider>
       <LayoutProvider>
         {loading ? <Loader /> : children}
         </LayoutProvider>
+        </CheckedProjectsProvider>
       </body>
     </html>
   );

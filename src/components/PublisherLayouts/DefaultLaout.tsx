@@ -2,6 +2,10 @@
 import React, { useState, ReactNode } from "react";
 import Sidebar from "@/components/PublisherSidebar";
 import Header from "@/components/PublisherHeader";
+import BuyerSidebar from "@/components/BuyerSidebar";
+import BuyerHeader from "@/components/BuyerHeader";
+import PublisherSidebar from "@/components/PublisherSidebar";
+import PublisherHeader from "@/components/PublisherHeader";
 import { useLayout } from "@/helpers/LayoutContext";
 
 export default function DefaultLayout({
@@ -11,8 +15,8 @@ export default function DefaultLayout({
 }) {
   const { isPublisher } = useLayout();
 
-  const Sidebar = isPublisher ? BuyerSidebar : PublisherSidebar;
-  const Header = isPublisher ? BuyerHeader : PublisherHeader;
+  const Sidebar = isPublisher ? PublisherSidebar : BuyerSidebar;
+  const Header = isPublisher ? PublisherHeader : BuyerHeader;
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
