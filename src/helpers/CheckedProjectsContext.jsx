@@ -1,16 +1,15 @@
-// CheckedProjectsContext.js
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState } from 'react';
 
-const CheckedProjectsContext = createContext();
+const ProjectContext = createContext();
 
-export const CheckedProjectsProvider = ({ children }) => {
-    const [checkedProjects_, setCheckedProjects_] = useState([]);
+export const ProjectProvider = ({ children }) => {
+  const [checkedProjects, setCheckedProjects] = useState([]);
 
-    return (
-        <CheckedProjectsContext.Provider value={{ checkedProjects_, setCheckedProjects_ }}>
-            {children}
-        </CheckedProjectsContext.Provider>
-    );
+  return (
+    <ProjectContext.Provider value={{ checkedProjects, setCheckedProjects }}>
+      {children}
+    </ProjectContext.Provider>
+  );
 };
 
-export const useCheckedProjects_ = () => useContext(CheckedProjectsContext);
+export default ProjectContext;

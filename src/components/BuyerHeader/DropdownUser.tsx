@@ -9,6 +9,7 @@ import { IoMdSwitch } from "react-icons/io";
 import { GrMoney } from "react-icons/gr";
 import Cookies from 'js-cookie';
 import { useLayout } from "@/helpers/LayoutContext";
+import axios from "axios";
 
 const DropdownUser = () => {
   const router = useRouter()
@@ -29,19 +30,36 @@ const DropdownUser = () => {
     router.push("/");
     setTimeout(() => {
       window.location.reload();
-  }, 10);
+  }, 0);
 
   }
 
-  const [email, setEmail] = useState('');
 
+  const [data, setData] = useState('')
   useEffect(() => {
-    const loginUser = localStorage.getItem('login_user');
-    if (loginUser) {
-      const user = JSON.parse(loginUser);
-      setEmail(user.email);
-    }
-  }, []);
+    const fetchUsers = async () => {
+        const token = localStorage.getItem('login_access_token');
+        if (!token) {
+            alert('You need to log in first.');
+            return;
+        }
+        try {
+            const response = await axios.get('http://172.16.16.22:8000/dashboard/profile/', {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+            "Content-Type": "application/json",
+                },
+            });
+            const data = response.data;
+            console.log(data);
+            
+            setData(data);
+        } catch (error:any) {
+            console.error('Error fetching projects:', error.response);
+        }
+    };
+    fetchUsers();
+}, []);
 
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
@@ -65,7 +83,7 @@ const DropdownUser = () => {
         </span>
 
         <span className="flex items-center gap-2 font-medium text-dark dark:text-dark-6" >
-          <span className="hidden lg:block">{email}</span>
+          <span className="hidden lg:block">{data.username}</span>
 
           <svg
             className={`fill-current duration-200 ease-in ${dropdownOpen && "rotate-180"}`}
@@ -110,10 +128,10 @@ const DropdownUser = () => {
 
             <span className="block">
               <span className="block font-medium text-dark dark:text-white">
-                Jhon Smith
+                {data.username}
               </span>
               <span className="block font-medium text-dark-5 dark:text-dark-6">
-                {email}
+                {data.email}
               </span>
             </span>
           </div>

@@ -1,5 +1,6 @@
+
 "use client";
-import React, { createContext, useState, useContext, ReactNode } from "react";
+import React, { createContext, useState, useContext, ReactNode, useEffect } from "react";
 
 interface LayoutContextProps {
   isPublisher: boolean;
@@ -9,10 +10,22 @@ interface LayoutContextProps {
 const LayoutContext = createContext<LayoutContextProps | undefined>(undefined);
 
 export const LayoutProvider = ({ children }: { children: ReactNode }) => {
-  const [isPublisher, setIsPublisher] = useState(false);
+  const [isPublisher, setIsPublisher] = useState(() => {
+    // Check localStorage for the initial value
+    if (typeof window !== "undefined") {
+      const savedLayout = localStorage.getItem("isPublisher");
+      return savedLayout ? JSON.parse(savedLayout) : false;
+    }
+    return false;
+  });
 
   const toggleLayout = () => {
-    setIsPublisher(!isPublisher);
+    setIsPublisher((prev:any) => {
+      const newValue = !prev;
+      // Save the new value to localStorage
+      localStorage.setItem("isPublisher", JSON.stringify(newValue));
+      return newValue;
+    });
   };
 
   return (

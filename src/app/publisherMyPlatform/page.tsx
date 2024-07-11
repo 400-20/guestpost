@@ -7,9 +7,14 @@ import { IoIosHeartEmpty } from "react-icons/io";
 import { FaChevronRight } from "react-icons/fa6";
 import Aos from "aos";
 import "aos/dist/aos.css";
+import { IoMdAddCircle } from "react-icons/io";
 
 
 const Page = () => {
+
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const openAddModal = () => setIsAddModalOpen(true);
+  const closeAddModal = () => setIsAddModalOpen(false);
   useEffect(() => {
     Aos.init({});
 }, []);
@@ -58,8 +63,31 @@ const Page = () => {
     />
         <p className='text-white font-bold'>Please click here to read and familiarise yourself with things you can and cannot do.</p>
         </div>
-        {isRotated && <div className='h-[50vh] bg-[rgba(0,0,0,0.3)] my-4 transition-all ease-in-out duration-300' data-aos='fade-down'>
+        {isRotated && <div className='h-[80vh] md:h-[50vh] bg-[rgba(255,255,255,1)] my-4 transition-all ease-in-out duration-300 flex flex-col gap-2 p-4  text-gray-6 font-medium' data-aos='fade-down'>
+<p>• Before you start working on a task, make sure you have accepted it.</p>
+<p>• Reject the task as soon as you think you cannot complete it.</p>
+<p>• The article must not be on the subdomain</p>
+<p>• Don't ask the buyer to approve the task.</p>
+<p>• If the Buyer doesn't approve the task, it will be automatically marked as approved after 3 days.</p>
+<p>• If the Buyer request any changes, make sure you fix it as soon as possible if not the task may be cancelled by the buyer or GuestPostSale.</p>
+<p>• Before you deliver the task, make sure that all links and target URLs are in place and follow all the instructions.</p>
+<p>• Don't try to renegotiate the price with the Buyer.</p>
+<p>• Don't exchange email, phone numbers or links to any sites with the Buyer.</p>
+<p>• We read all messages and we reserve the right to suspend or ban your account if you fail any of these rules.</p>
+<p>• As a website Owner: After delivering the task, if the Buyer doesn't approve it, it will be automatically marked as complete after 3 days and the funds will be Available For Withdrawal.</p>
+<p>• As a contributor on a website: After delivering the task, if the Buyer doesn't approve it, it will be automatically marked as complete after 3 days and the funds will move to your Balance Awaiting and will be Available For Withdrawal After 21 Days.</p>
+<p>• Payments are made weekly (Every Monday). Please Make sure to request your payment before Sunday Midnight UK Time.</p>
           </div>}
+
+          <div className="w-full h-[50px] bg-white mt-4 rounded-lg flex items-center justify-between  p-4 gap-4 mb-4">
+
+        <p className='text-gray-6 font-bold'>You can add up to 500 website to your account.</p>
+
+        <button
+                    onClick={openAddModal}
+                    className='bg-[#2c7be5] hover:bg-primary transition-all ease-in-out duration-300 px-5 text-white py-2 rounded-lg flex items-center justify-center gap-2'
+                > <IoMdAddCircle className='text-2xl' /><span className='font-medium'>Create project</span></button>
+        </div>
           <AntDesignTable />
       </DefaultLayout>  
     </>

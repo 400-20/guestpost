@@ -4,10 +4,13 @@
 
   const SidebarItem = ({ item, pageName, setPageName }: any) => {
     const handleClick = () => {
+      if (!item.label) return; 
+      
       const updatedPageName =
         pageName !== item.label.toLowerCase() ? item.label.toLowerCase() : "";
       return setPageName(updatedPageName);
     };
+    
 
     return (
       <>
@@ -16,6 +19,8 @@
             href={item.route}
             onClick={handleClick}
             className={`${pageName === item.label.toLowerCase() ? "bg-primary/[.07] text-primary dark:bg-white/10 dark:text-white" : "text-dark-4 hover:bg-gray-2 hover:text-dark dark:text-gray-5 dark:hover:bg-white/10 dark:hover:text-white"} group relative flex items-center gap-3 rounded-[7px] px-3.5 py-3 font-medium duration-300 ease-in-out`}
+            // className={`${item.label && pageName === item.label.toLowerCase() ? "bg-primary/[.07] text-primary dark:bg-white/10 dark:text-white" : "text-dark-4 hover:bg-gray-2 hover:text-dark dark:text-gray-5 dark:hover:bg-white/10 dark:hover:text-white"} group relative flex items-center gap-3 rounded-[7px] px-3.5 py-3 font-medium duration-300 ease-in-out`}
+
           >
             {item.icon}
             {item.label}
@@ -34,6 +39,10 @@
                 className={`absolute right-3.5 top-1/2 -translate-y-1/2 fill-current ${
                   pageName !== item.label.toLowerCase() && "rotate-180"
                 }`}
+                // className={`absolute right-3.5 top-1/2 -translate-y-1/2 fill-current ${
+                //   item.label && pageName !== item.label.toLowerCase() ? "rotate-180" : ""
+                // }`}
+                
                 width="22"
                 height="22"
                 viewBox="0 0 22 22"
@@ -55,6 +64,10 @@
               className={`translate transform overflow-hidden ${
                 pageName !== item.label.toLowerCase() && "hidden"
               }`}
+              // className={`translate transform overflow-hidden ${
+              //   item.label && pageName !== item.label.toLowerCase() ? "hidden" : ""
+              // }`}
+              
             >
               <SidebarDropdown item={item.children} />
             </div>

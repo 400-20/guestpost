@@ -10,6 +10,7 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import { IoPersonAdd } from "react-icons/io5";
 import { IoBagAdd } from "react-icons/io5";
 import axios from "axios";
+import { GoProject } from "react-icons/go";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -22,43 +23,38 @@ interface Project {
 }
 
 
+
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-      const fetchProjects = async () => {
-          const token = localStorage.getItem('login_access_token');
-          if (!token) {
-              console.error('You need to log in first.');
-              return;
-          }
-          try {
-              const response = await axios.get('http://172.16.16.22:8000/dashboard/projects/', {
-                  headers: {
-                      'Authorization': `Bearer ${token}`,
-                  },
-              });
+    const fetchProjects = async () => {
+        const token = localStorage.getItem('login_access_token');
+        if (!token) {
+            alert('You need to log in first.');
+            return;
+        }
+        try {
+            const response = await axios.get('http://172.16.16.22:8000/dashboard/projects/', {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            const data = response.data;
+            setProjects(data);
+        } catch (error:any) {
+            console.error('Error fetching projects:', error.response);
+        }
+    };
+    fetchProjects();
+}, []);
 
-              // Filter projects where status is true
-              const filteredProjects = response.data.filter(project => project.status === true);
-              setProjects(filteredProjects);
-
-
-              console.log('Available projects with status true:', filteredProjects);
-
-          } catch (error:any) {
-              console.error('Error fetching projects:', error.response);
-
-          }
-      };
-
-      fetchProjects();
-  }, []);
+const checkedProjects = projects.filter(project => project.status);
 
   const menuGroups = [
     {
       name: "BUYER MENU",
-      menuItems: [
+       menuItems: [
         {
           icon: (
             <svg
@@ -98,54 +94,34 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               xmlns="http://www.w3.org/2000/svg"
             >
               <g>
-  
                 <path d="M2,9H9V2H2Zm0,9H9V11H2ZM18,2H11V9h7Zm-8,9,5,8,5-8Z" />
-  
               </g>
             </svg>
           ),
           label: "All my projects",
-          route: "/allmyprojects",
-  
+          route: "/projects",
         },
-  //render new ones here
-//   ...projects.map(project => ({
-//     icon: (
-//         <svg
-//             className="fill-current"
-//             width="24"
-//             height="24"
-//             viewBox="0 0 24 24"
-//             fill="none"
-//             xmlns="http://www.w3.org/2000/svg"
-//         >
-//             <g>
-//                 <path d="M2,9H9V2H2Zm0,9H9V11H2ZM18,2H11V9h7Zm-8,9,5,8,5-8Z" />
-//             </g>
-//         </svg>
-//     ),
-//     label: project.name,
-//     route: `/project/${project.id}`,
-// })),
+
+
+        ...checkedProjects.map((project) => ({
+          icon: (
+<GoProject className="text-xl"/>
+          ),
+          label: project.title,
+          route: ``,
+                    children: [
+            { label: "All Publisher Sites", route: `/projects/${project.id}/publishers` },
+            { label: "Verified Website", route: `/projects/${project.id}/recommended` },
+            { label: "Favourite Publishers", route: `/projects/${project.id}/favourite-publishers` },
+            { label: "Link Insertions", route: `/projects/${project.id}/link-insertion/` },
+          ],
+        })),
       ],
+      
     },
     {
       name: "OTHERS",
       menuItems: [
-        // {
-        //   icon: (
-        //     <svg>
-  
-        //     </svg>
-        //   ),
-        //   label: "UI Elements",
-        //   route: "#",
-        //   children: [
-        //     { label: "Alerts", route: "/ui-elements/alerts" },
-        //     { label: "Buttons", route: "/ui-elements/buttons" },
-        //   ],
-        // },
-  
         //faq
         {
           icon: (

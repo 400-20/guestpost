@@ -15,8 +15,10 @@ import { CiSaveUp2 } from "react-icons/ci";
 import { MdOutlineBookmarkRemove } from "react-icons/md";
 import CheckboxOne from '@/components/FormElements/Checkboxes/CheckboxOne';
 import axios from 'axios';
+import { useRouter} from 'next/navigation'
 
 const AllMyProjects = () => {
+    const router = useRouter();
     useEffect(() => {
         Aos.init({});
     }, []);
@@ -81,14 +83,14 @@ const AllMyProjects = () => {
                 },
             });
             console.log('Project created:', response);
+            const data = response.data;
+            console.log(data);
+            router.push(`/projects/${data.id}`)
         } catch (error) {
             console.error('Error creating project:', error.response);
         }
 
         closeAddModal();
-        setTimeout(() => {
-            window.location.reload();
-        }, 0);
     };
 
     const [projects, setProjects] = useState([]);
@@ -147,15 +149,28 @@ const AllMyProjects = () => {
             console.error('Error updating project status:', error.response);
         }
     };
-
+    const [checkedProjects, setCheckedProjects] = useState([]);
     // Function to handle checkbox change
     const handle_Checkbox_Change = async (projectId, currentStatus) => {
         const newStatus = !currentStatus; // Toggle the status
         await update_Project_Status(projectId, newStatus);
+
+        setCheckedProjects(prevCheckedProjects => {
+            if (newStatus) {
+                return [...prevCheckedProjects, projectId];
+            } else {
+                return prevCheckedProjects.filter(id => id !== projectId);
+            }
+        });
+
+        setTimeout(() => {
+            window.location.reload();
+        }, 0);
     };
 
 
-
+    
+    
     return (
         <DefaultLayout>
             <div className='flex flex-col items-center justify-center'>
@@ -181,6 +196,7 @@ const AllMyProjects = () => {
                                 </label>
                                 <input
                                     type="text"
+                                    required
                                     placeholder="Name"
                                     value={projectName}
                                     onChange={(e) => setProjectName(e.target.value)}
@@ -195,6 +211,7 @@ const AllMyProjects = () => {
                                 </label>
                                 <input
                                     type="text"
+                                    required
                                     placeholder="http://www.example.com"
                                     value={projectUrl}
                                     onChange={(e) => setProjectUrl(e.target.value)}
@@ -218,12 +235,21 @@ const AllMyProjects = () => {
                             <div className='h-[60px] w-full bg-gradient-to-r from-[#2c7be5] to-primary rounded-t-lg justify-between flex items-center px-5'>
                                 <h4 className='text-white font-medium '>{project.title}</h4>
                                 <h4 className='text-white font-medium flex gap-2'>
-                                    <input
-                                        type="checkbox"
-                                        checked={project.status}
-                                        onChange={() => handle_Checkbox_Change(project.id, project.status)}
-                                        className="h-5 w-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-                                    />
+                                <Link title={`${project.status ? "Remove From The Left Menu" : "Add To The Left Menu"}  `} id="t-1" placement='top' >
+                                <input
+        type="checkbox"
+        id={`project-${project.id}`}
+        checked={project.status}
+        onChange={() => handle_Checkbox_Change(project.id, project.status)}
+        className="absolute opacity-0 w-0 h-0"
+    />
+    <label
+        htmlFor={`project-${project.id}`}
+        className="block overflow-hidden h-5 rounded-full bg-green cursor-pointer"
+    >
+        <div className={`h-5 w-5 bg-red rounded-full shadow-md transform transition-transform duration-200 ease-in ${project.status ? 'translate-x-full' : 'translate-x-0'}`}></div>
+    </label>
+    </Link>
 
                                     <Link title="Edit This Project" id="t-1" placement='top' ><TbEdit className='text-2xl' onClick={openEditModal} /></Link>
                                     {isEditModalOpen && (
@@ -231,7 +257,7 @@ const AllMyProjects = () => {
                                             <div className="modal-content" onClick={e => e.stopPropagation()} data-aos='fade'>
                                                 <div className='w-full bg-gray-200 p-3 text-gray-700 text-center rounded-lg font-bold mb-3 flex justify-between items-center '>
                                                     Edit Project<ImCancelCircle onClick={closeEditModal} className='text-xl hover:text-red-500 transition-all ease-in-out duration-150' /></div>
-                                                <form className="modal-form">
+                                                <form className="modal-form" onSubmit={handleEditFormSubmit}>
                                                     <div>
                                                         <label className="mb-3 block text-body-lg font-semibold text-[#3c5a99]  dark:text-white">
                                                             Project Name
@@ -239,6 +265,8 @@ const AllMyProjects = () => {
                                                         <input
                                                             type="text"
                                                             placeholder="Name"
+                                                            name='title'
+                                                            
                                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
                                                         />
                                                     </div>
@@ -250,11 +278,14 @@ const AllMyProjects = () => {
                                                         </label>
                                                         <input
                                                             type="text"
+                                                            name='url'
                                                             placeholder="http://www.example.com"
+
                                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5.5 py-3 text-dark outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
                                                         />
                                                     </div>
                                                     <button
+                                                    type='submit'
                                                         className='bg-[#2c7be5] hover:bg-primary transition-all ease-in-out duration-300 px-5 text-white py-2 rounded-lg flex items-center justify-center gap-2'
                                                     > <CiSaveUp2 className='text-2xl ' /><span className='font-medium'>Save</span></button>
                                                 </form>

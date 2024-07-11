@@ -2,18 +2,46 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import axios from "axios";
 
 const ProfileBox = () => {
 
   const [email, setEmail] = useState('');
+  const [data, setData] = useState('')
 
+  // useEffect(() => {
+  //   const loginUser = localStorage.getItem('login_user');
+  //   if (loginUser) {
+  //     const user = JSON.parse(loginUser);
+  //     setEmail(user.email);
+  //   }
+  // }, []);
   useEffect(() => {
-    const loginUser = localStorage.getItem('login_user');
-    if (loginUser) {
-      const user = JSON.parse(loginUser);
-      setEmail(user.email);
-    }
-  }, []);
+    const fetchUsers = async () => {
+        const token = localStorage.getItem('login_access_token');
+        if (!token) {
+            alert('You need to log in first.');
+            return;
+        }
+        try {
+            const response = await axios.get('http://172.16.16.22:8000/dashboard/profile/', {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+            "Content-Type": "application/json",
+
+                },
+            });
+            const data = response.data;
+            console.log(data);
+            
+            setData(data);
+        } catch (error:any) {
+            console.error('Error fetching projects:', error.response);
+        }
+    };
+    fetchUsers();
+}, []);
+
   return (
     <>
       <div className="overflow-hidden rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
@@ -104,8 +132,11 @@ const ProfileBox = () => {
             </label>
           </div>
           <div className="mt-4">
+          <h3 className="mb-1 font-bold text-dark dark:text-white">
+            {data.username}
+            </h3>
             <h3 className="mb-1 text-heading-6 font-bold text-dark dark:text-white">
-            {email}
+            {data.email}
             </h3>
             {/* <p className="font-medium">Ui/Ux Designer</p> */}
             <div className="mx-auto mb-5.5 mt-5 grid max-w-[370px] grid-cols-3 rounded-[5px] border border-stroke py-[9px] shadow-1 dark:border-dark-3 dark:bg-dark-2 dark:shadow-card">

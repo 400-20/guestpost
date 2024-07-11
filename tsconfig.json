@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/Login/Login.jsx", "src/app/login/login.jsx", "src/app/signup/page.jsx", "src/app/allmyprojects/page.jsx", "src/components/FormElements/Switchers/SwitcherOne.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/Login/Login.jsx", "src/app/login/login.jsx", "src/app/signup/page.jsx", "src/app/projects/page.jsx", "src/components/FormElements/Switchers/SwitcherOne.tsx"],
   "exclude": ["node_modules"]
 }

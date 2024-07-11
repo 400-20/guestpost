@@ -13,12 +13,13 @@ const CheckboxOne = () => {
           <input
             type="checkbox"
             id="checkboxLabelOne"
-            className="sr-only"
+            className="h-4 w-4 mr-2 mt-1 cursor-pointer"
+            // className="sr-only"
             onChange={() => {
               setIsChecked(!isChecked);
             }}
           />
-          <div
+          {/* <div
             className={`mr-2 flex h-5 w-5 items-center justify-center rounded border ${
               isChecked
                 ? "border-red bg-gray-2 dark:bg-transparent"
@@ -28,7 +29,7 @@ const CheckboxOne = () => {
             <span
               className={`h-2.5 w-2.5 rounded-sm ${isChecked && "bg-red"}`}
             ></span>
-          </div>
+          </div> */}
         </div>
       </label>
     </div>

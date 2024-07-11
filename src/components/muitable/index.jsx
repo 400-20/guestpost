@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Input, Button, Space, Popover } from 'antd';
+import { FaEye } from "react-icons/fa";
 import { SearchOutlined } from '@ant-design/icons';
 import { BiEdit, BiAction, BiSearch } from 'react-icons/bi';
 import Highlighter from 'react-highlight-words';
@@ -145,7 +146,7 @@ const AntDesignTable = () => {
             title: 'Buyer Page',
             dataIndex: 'Buyer Page',
             key: 'Buyer Page',
-            render: () => <BiSearch style={{ fontSize: '1.5em', color: 'blue' }} />,
+            render: () => <FaEye style={{ fontSize: '1.5em', color: 'blue', border:'1px solid blue', padding:'4px' }} />,
         },
         {
             title: 'Edit',
