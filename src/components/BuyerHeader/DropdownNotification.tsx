@@ -39,7 +39,7 @@ const DropdownNotification = () => {
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative hidden sm:block">
       <li>
         <Link
-          onMouseEnter={() => {
+          onClick={() => {
             setNotifying(false);
             setDropdownOpen(!dropdownOpen);
           }}
@@ -76,10 +76,6 @@ const DropdownNotification = () => {
 
         {dropdownOpen && (
           <div
-          onMouseLeave={() => {
-            setNotifying(false);
-            setDropdownOpen(!dropdownOpen);
-          }}
             className={`absolute -right-27 mt-7.5 flex h-[550px] w-75 flex-col rounded-xl border-[0.5px] border-stroke bg-white px-5.5 pb-5.5 pt-5 shadow-default dark:border-dark-3 dark:bg-gray-dark sm:right-0 sm:w-[364px]`}
           >
             <div className="mb-5 flex items-center justify-between">

@@ -6,8 +6,11 @@ import axios from "axios";
 import { toast } from 'react-hot-toast';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Cookies from 'js-cookie';
+import { BASE_URL } from '@/utils/api';
 
 export default function SigninWithPassword() {
+
+
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({
@@ -72,7 +75,7 @@ export default function SigninWithPassword() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://172.16.16.22:8000/auth/api/login/", {
+      const response = await axios.post(`${BASE_URL}auth/login/`, {
         email: user.email,
         password: user.password,  
         username:user.username
@@ -85,11 +88,14 @@ export default function SigninWithPassword() {
       localStorage.setItem("login_access_token", response.data.access);
       localStorage.setItem("login_refresh_token", response.data.refresh);
       localStorage.setItem("login_user", JSON.stringify(user));
-console.log(response.data);
+// console.log(response.data);
 
       if (areTokensPresent()) {
         toast.success("Login successful");
         router.push("/buyerDashboard");
+                setTimeout(() => {
+            window.location.reload();
+        }, 0);
       } else {
         toast.error("Signup successful");
         console.error("Tokens are missing in localStorage.");

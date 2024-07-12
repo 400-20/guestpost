@@ -3,6 +3,7 @@
 import { useEffect, useState, Suspense } from 'react';
 import axios from 'axios';
 import DefaultLayout from '@/components/BuyerLayouts/DefaultLaout';
+import { BASE_URL } from '@/utils/api';
 
 const ProjectDetails = ({ project }) => {
   return (
@@ -19,6 +20,8 @@ const Project = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
+
+
   useEffect(() => {
     const fetchProject = async () => {
       const token = localStorage.getItem('login_access_token');
@@ -31,7 +34,7 @@ const Project = () => {
 
       if (projectId) {
         try {
-          const response = await axios.get(`http://172.16.16.22:8000/dashboard/projects/${projectId}/`, {
+          const response = await axios.get(`${BASE_URL}projects/${projectId}/`, {
             headers: {
               'Authorization': `Bearer ${token}`,
             "Content-Type": "application/json",

@@ -7,6 +7,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import { toast } from 'react-hot-toast';
 import Image from "next/image";
+import { BASE_URL } from '@/utils/api';
+
 
 
 export default function Signup() {
@@ -109,7 +111,7 @@ export default function Signup() {
     try {
       console.log(user);
       const response = await axios.post(
-        "http://172.16.16.22:8000/auth/api/register/",
+        `${BASE_URL}auth/register/`,
         user,
         {
           headers: {

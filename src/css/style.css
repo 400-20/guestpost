@@ -543,6 +543,7 @@ input[type="search"]::-webkit-search-cancel-button {
     z-index: 9999;
 }
 
+
 .modal-backdrop .modal-content {
     transform: translateY(0);
     opacity: 1;
@@ -554,6 +555,7 @@ input[type="search"]::-webkit-search-cancel-button {
     flex-direction: column;
     gap: 10px;
 }
+
 
 .modal-form label {
     display: flex;
@@ -624,3 +626,59 @@ bottom: 0px;
 
     font-size: 15px;
   }
+
+  .modalbackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease-in-out;
+    z-index: 9999;
+}
+
+.modalcontent {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 1200px;
+    width: 100%;
+    max-height: 80vh; /* Set a maximum height */
+    overflow-y: auto; /* Allow scrolling if content overflows */
+    transform: translateY(-100px);
+    opacity: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.modalbackdrop .modalcontent {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.modalform {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px;
+}
+
+@media (min-width: 640px) {
+    .modalform {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .modalform {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+.modalform label {
+    display: flex;
+    flex-direction: column;
+}
+
+

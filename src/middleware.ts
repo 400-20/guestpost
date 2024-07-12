@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
-  const protectedPaths = ['/profile','/calendar','/charts','/forms','/login','/pages','/tables','/allmyprojects','/buyerDashboard','/publisherDashboard'];
+  const protectedPaths = ['/profile','/calendar','/charts','/forms','/login','/pages','/tables','/projects','/buyerDashboard','/publisherDashboard'];
   const authPaths = ['/signin', '/signup'];
 
 
@@ -22,5 +22,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/profile','/signin', '/signup','/auth','/calendar','/charts','/forms','/login','/pages','/tables','/allmyprojects','/buyerDashboard','/publisherDashboard']
+  matcher: ['/', '/profile','/signin', '/signup','/auth','/calendar','/charts','/forms','/login','/pages','/tables','/projects','/buyerDashboard','/publisherDashboard']
 };

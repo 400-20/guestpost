@@ -5,6 +5,8 @@ import BuyerHeader from "@/components/BuyerHeader";
 import PublisherSidebar from "@/components/PublisherSidebar";
 import PublisherHeader from "@/components/PublisherHeader";
 import { useLayout } from "@/helpers/LayoutContext";
+import { SidebarProjectProvider } from "@/helpers/SidebarProjectContext";
+import AllMyProjects from "@/app/projects/page";
 
 export default function DefaultLayout({
   children,
@@ -22,7 +24,10 @@ export default function DefaultLayout({
       {/* <!-- ===== Page Wrapper Star ===== --> */}
       <div className="flex h-screen overflow-hidden">
         {/* <!-- ===== Sidebar Star ===== --> */}
+
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+
+
         {/* <!-- ===== Sidebar End ===== --> */}
 
         {/* <!-- ===== Content Area Star ===== --> */}

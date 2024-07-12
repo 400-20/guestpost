@@ -11,6 +11,7 @@ import { IoPersonAdd } from "react-icons/io5";
 import { IoBagAdd } from "react-icons/io5";
 import axios from "axios";
 import { GoProject } from "react-icons/go";
+import { useSidebarProjects } from "@/helpers/SidebarProjectContext";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -25,29 +26,30 @@ interface Project {
 
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
-  const [projects, setProjects] = useState([]);
+//   const [projects, setProjects] = useState([]);
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-        const token = localStorage.getItem('login_access_token');
-        if (!token) {
-            alert('You need to log in first.');
-            return;
-        }
-        try {
-            const response = await axios.get('http://172.16.16.22:8000/dashboard/projects/', {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
-            const data = response.data;
-            setProjects(data);
-        } catch (error:any) {
-            console.error('Error fetching projects:', error.response);
-        }
-    };
-    fetchProjects();
-}, []);
+//   useEffect(() => {
+//     const fetchProjects = async () => {
+//         const token = localStorage.getItem('login_access_token');
+//         if (!token) {
+//             alert('You need to log in first.');
+//             return;
+//         }
+//         try {
+//             const response = await axios.get('http://172.16.16.22:8000/dashboard/projects/', {
+//                 headers: {
+//                     'Authorization': `Bearer ${token}`,
+//                 },
+//             });
+//             const data = response.data;
+//             setProjects(data);
+//         } catch (error:any) {
+//             console.error('Error fetching projects:', error.response);
+//         }
+//     };
+//     fetchProjects();
+// }, []);
+const { projects } = useSidebarProjects();
 
 const checkedProjects = projects.filter(project => project.status);
 

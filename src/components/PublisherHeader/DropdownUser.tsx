@@ -8,6 +8,8 @@ import { useLayout } from "@/helpers/LayoutContext";
 import { toast } from 'react-hot-toast';
 import Cookies from 'js-cookie';
 import axios from "axios";
+import { BASE_URL } from '@/utils/api';
+
 
 const DropdownUser = () => {
   const { toggleLayout } = useLayout();
@@ -43,7 +45,7 @@ const DropdownUser = () => {
             return;
         }
         try {
-            const response = await axios.get('http://172.16.16.22:8000/dashboard/profile/', {
+            const response = await axios.get(`${BASE_URL}profile/`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
             "Content-Type": "application/json",
