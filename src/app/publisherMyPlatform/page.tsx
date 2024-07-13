@@ -39,7 +39,7 @@ const Page = () => {
     const [contentPlacementPrice, setContentPlacementPrice] = useState('');
     const [contentCreationPrice, setContentCreationPrice] = useState('');
     const [linkInsertPrice, setLinkInsertPrice] = useState('');
-    const [selectedStatus, setSelectedStatus] = useState('');
+    // const [selectedStatus, setSelectedStatus] = useState('');
     const [deliveryTime, setDeliveryTime] = useState('');
     const [wordLimit, setWordLimit] = useState('');
     const [gpSite1, setGpSite1] = useState('');
@@ -47,12 +47,14 @@ const Page = () => {
     const [gpSite3, setGpSite3] = useState('');
     const [selectedCategories, setSelectedCategories] = useState('');
     const [specialRequirements, setSpecialRequirements] = useState('');
+    // console.log(selectedCategories);
+    
 
 
 
     const [langs, setLangs] = useState([]);
     const [selected_LinkType, setSelected_LinkType] = useState([]);
-    const [selected_Category, setSelected_Category] = useState([]);
+    const [selected_Category, setSelected_Category] = useState<any>([]);
     const fetchData = async () => {
         const token = localStorage.getItem('login_access_token');
         if (!token) {
@@ -70,7 +72,7 @@ const Page = () => {
             setLangs(response.data.language);
             setSelected_LinkType(response.data.link_type);
             setSelected_Category(response.data.categories)
-            console.log(response.data.language);
+            // console.log(response.data.language);
 
         } catch (error) {
             console.log(error);
@@ -88,7 +90,7 @@ const Page = () => {
     }, []);
     const [isRotated, setIsRotated] = useState(false);
 
-    const handleAddWebsite = async (event:any) => {
+    const handleAddWebsite = async (event: any) => {
         event.preventDefault();
 
         const token = localStorage.getItem('login_access_token');
@@ -109,7 +111,7 @@ const Page = () => {
             content_placement_price: contentPlacementPrice,
             content_creation_price: contentCreationPrice,
             link_insert_price: linkInsertPrice,
-            website_status: selectedStatus,
+            // website_status: selectedStatus,
             delivery_time: deliveryTime,
             word_limit: wordLimit,
             gp_sites: [gpSite1, gpSite2, gpSite3],
@@ -118,7 +120,7 @@ const Page = () => {
         };
 
         try {
-            const response = await axios.post(`${BASE_URL}websites`, formData, {
+            const response = await axios.post(`${BASE_URL}website-detail/`, formData, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -126,13 +128,44 @@ const Page = () => {
             });
             console.log('Website added:', response);
 
-        } catch (error:any) {
+        } catch (error: any) {
             console.error('Error adding website:', error.response);
         }
 
         closeAddModal();
     };
 
+
+    const [checkedCategories, setCheckedCategories] = useState<any[]>([]);
+
+    const handleCheckboxChange = (id: any) => {
+        if (checkedCategories.includes(id)) {
+            setCheckedCategories(checkedCategories.filter((categoryId) => categoryId !== id));
+        } else {
+            if (checkedCategories.length < 3) {
+                setCheckedCategories([...checkedCategories, id]);
+            }
+        }
+    };
+
+    const [charRemaining, setCharRemaining] = useState(800);
+    const [char_Remaining, setChar_Remaining] = useState<number>();
+
+    useEffect(() => {
+        const updateChar = () => {
+            const newNum = charRemaining - specialRequirements.length;
+            setChar_Remaining(newNum)
+        }
+        updateChar();
+    }, [specialRequirements, charRemaining, char_Remaining])
+
+    const [placeholder, setPlaceholder] = useState<String>()
+    useEffect(() => {
+        const updatedPlaceholder = () => {
+            setPlaceholder(projectUrl)
+        }
+        updatedPlaceholder();
+    }, [projectUrl])
 
 
 
@@ -180,21 +213,51 @@ const Page = () => {
                     />
                     <p className='text-white font-bold'>Please click here to read and familiarise yourself with things you can and cannot do.</p>
                 </div>
-                {isRotated && <div className='h-[80vh] md:h-[50vh] bg-[rgba(255,255,255,1)] my-4 transition-all ease-in-out duration-300 flex flex-col gap-2 p-4  text-gray-6 font-medium' data-aos='fade-down'>
-                    <p>• Before you start working on a task, make sure you have accepted it.</p>
-                    <p>• Reject the task as soon as you think you cannot complete it.</p>
-                    <p>• The article must not be on the subdomain</p>
-                    <p>• Don't ask the buyer to approve the task.</p>
-                    <p>• If the Buyer doesn't approve the task, it will be automatically marked as approved after 3 days.</p>
-                    <p>• If the Buyer request any changes, make sure you fix it as soon as possible if not the task may be cancelled by the buyer or GuestPostSale.</p>
-                    <p>• Before you deliver the task, make sure that all links and target URLs are in place and follow all the instructions.</p>
-                    <p>• Don't try to renegotiate the price with the Buyer.</p>
-                    <p>• Don't exchange email, phone numbers or links to any sites with the Buyer.</p>
-                    <p>• We read all messages and we reserve the right to suspend or ban your account if you fail any of these rules.</p>
-                    <p>• As a website Owner: After delivering the task, if the Buyer doesn't approve it, it will be automatically marked as complete after 3 days and the funds will be Available For Withdrawal.</p>
-                    <p>• As a contributor on a website: After delivering the task, if the Buyer doesn't approve it, it will be automatically marked as complete after 3 days and the funds will move to your Balance Awaiting and will be Available For Withdrawal After 21 Days.</p>
-                    <p>• Payments are made weekly (Every Monday). Please Make sure to request your payment before Sunday Midnight UK Time.</p>
-                </div>}
+
+                {isRotated && (
+                    <div className='h-[80vh] md:h-[50vh] bg-white my-4 transition-all ease-in-out duration-300 flex flex-col gap-2 p-4 text-gray-600 font-medium overflow-auto' data-aos='fade-down'>
+                        <p className='text-sm md:text-base'>
+                            • Before you start working on a task, make sure you have accepted it.
+                        </p>
+                        <p className='text-sm md:text-base'>
+                            • Reject the task as soon as you think you cannot complete it.
+                        </p>
+                        <p className='text-sm md:text-base'>
+                            • The article must not be on the subdomain.
+                        </p>
+                        <p className='text-sm md:text-base'>
+                            • Don't ask the buyer to approve the task.
+                        </p>
+                        <p className='text-sm md:text-base'>
+                            • If the Buyer doesn't approve the task, it will be automatically marked as approved after 3 days.
+                        </p>
+                        <p className='text-sm md:text-base'>
+                            • If the Buyer requests any changes, make sure you fix it as soon as possible if not the task may be cancelled by the buyer or GuestPostSale.
+                        </p>
+                        <p className='text-sm md:text-base'>
+                            • Before you deliver the task, make sure that all links and target URLs are in place and follow all the instructions.
+                        </p>
+                        <p className='text-sm md:text-base'>
+                            • Don't try to renegotiate the price with the Buyer.
+                        </p>
+                        <p className='text-sm md:text-base'>
+                            • Don't exchange email, phone numbers or links to any sites with the Buyer.
+                        </p>
+                        <p className='text-sm md:text-base'>
+                            • We read all messages and we reserve the right to suspend or ban your account if you fail any of these rules.
+                        </p>
+                        <p className='text-sm md:text-base'>
+                            • As a website Owner: After delivering the task, if the Buyer doesn't approve it, it will be automatically marked as complete after 3 days and the funds will be Available For Withdrawal.
+                        </p>
+                        <p className='text-sm md:text-base'>
+                            • As a contributor on a website: After delivering the task, if the Buyer doesn't approve it, it will be automatically marked as complete after 3 days and the funds will move to your Balance Awaiting and will be Available For Withdrawal After 21 Days.
+                        </p>
+                        <p className='text-sm md:text-base'>
+                            • Payments are made weekly (Every Monday). Please Make sure to request your payment before Sunday Midnight UK Time.
+                        </p>
+                    </div>
+                )}
+
 
                 <div className="w-full h-[50px] bg-white mt-4 rounded-lg flex items-center justify-between  p-4 gap-4 mb-4">
 
@@ -233,16 +296,16 @@ const Page = () => {
                                         </div>
 
                                         <select
-                                        
-                                        value={selectedLanguage}
-                                        onChange={(e) => setSelectedLanguage(e.target.value)}
-                                        className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary">
-                                            {langs.map((lang:any) =>(
-                                        <option
-                                        key={lang.id}
-                                        value={lang.id}>{lang.title}</option>
-                                    ))}
-                                    </select>
+
+                                            value={selectedLanguage}
+                                            onChange={(e) => setSelectedLanguage(e.target.value)}
+                                            className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary">
+                                            {langs.map((lang: any) => (
+                                                <option
+                                                    key={lang.id}
+                                                    value={lang.id}>{lang.title}</option>
+                                            ))}
+                                        </select>
 
 
                                     </div>
@@ -274,12 +337,10 @@ const Page = () => {
                                             value={selectedLinkType}
                                             onChange={(e) => setSelectedLinkType(e.target.value)}
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary">
-                                                {selected_LinkType.map((linkType:any) =>(
-                                            <option
-                                            key={linkType.id} value={linkType.id}>{linkType.title}</option>
-                                                ))}
-
-                                            {/* Add options here */}
+                                            {selected_LinkType.map((linkType: any) => (
+                                                <option
+                                                    key={linkType.id} value={linkType.id}>{linkType.title}</option>
+                                            ))}
                                         </select>
                                     </div>
 
@@ -395,7 +456,7 @@ const Page = () => {
                                         />
                                     </div>
 
-                                    <div className="relative mb-3">
+                                    {/* <div className="relative mb-3">
                                         <label className="block text-body-lg font-semibold text-[#3c5a99] dark:text-white">
                                             Website Status
                                         </label>
@@ -407,9 +468,9 @@ const Page = () => {
                                             onChange={(e) => setSelectedStatus(e.target.value)}
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary">
                                             <option value="">Select Status</option>
-                                            {/* Add options here */}
+                                    
                                         </select>
-                                    </div>
+                                    </div> */}
 
                                     <div className="relative mb-3">
                                         <label className="block text-body-lg font-semibold text-[#3c5a99] dark:text-white">
@@ -437,6 +498,9 @@ const Page = () => {
                                         <input
                                             type="number"
                                             placeholder="Word Limit"
+                                            max={5000}
+                                            min={250}
+                                            step={250}
                                             value={wordLimit}
                                             onChange={(e) => setWordLimit(e.target.value)}
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary"
@@ -452,7 +516,7 @@ const Page = () => {
                                         </div>
                                         <input
                                             type="text"
-                                            placeholder="GP Site 1"
+                                            placeholder={`${placeholder}/example-1`}
                                             value={gpSite1}
                                             onChange={(e) => setGpSite1(e.target.value)}
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary"
@@ -468,7 +532,7 @@ const Page = () => {
                                         </div>
                                         <input
                                             type="text"
-                                            placeholder="GP Site 2"
+                                            placeholder={`${placeholder}/example-2`}
                                             value={gpSite2}
                                             onChange={(e) => setGpSite2(e.target.value)}
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary"
@@ -484,7 +548,7 @@ const Page = () => {
                                         </div>
                                         <input
                                             type="text"
-                                            placeholder="GP Site 3"
+                                            placeholder={`${placeholder}/example-3`}
                                             value={gpSite3}
                                             onChange={(e) => setGpSite3(e.target.value)}
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary"
@@ -493,29 +557,40 @@ const Page = () => {
 
                                     <div className="col-span-2 relative mb-3">
                                         <label className="block text-body-lg font-semibold text-[#3c5a99] dark:text-white">
-                                            Category
+                                            Category (Select Any Three)
                                         </label>
-{selected_Category.map(selectedcategory =>(
-                                            <div
-                                            key={selectedcategory.id}
-                                            className="flex flex-col gap-2 max-h-32 overflow-y-auto items-start border px-4 py-1">
-                                            <div className="flex items-center justify-center">
-                                                <input type="checkbox" className="mr-2 h-4 w-4" /><p>{selectedcategory.title}</p>
-                                            </div>
+                                        <div className="flex flex-col gap-2 max-h-32 md:max-h-[200px] overflow-y-auto items-start border px-4 py-1 flex-wrap ">
+                                            {selected_Category.map((selectedcategory: any) => (
+                                                <div key={selectedcategory.id} className="flex items-center justify-center mr-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="mr-2 h-4 w-4"
+                                                        checked={checkedCategories.includes(selectedcategory.id)}
+                                                        value={selectedCategories}
+                                                        onChange={(e) => {
+                                                            handleCheckboxChange(selectedcategory.id);
+                                                            setSelectedCategories(selectedcategory.id);
+                                                        }}
+                                                        disabled={
+                                                            !checkedCategories.includes(selectedcategory.id) &&
+                                                            checkedCategories.length >= 3
+                                                        }
+                                                    />
+                                                    <p>{selectedcategory.title}</p>
+                                                </div>
+                                            ))}
                                         </div>
-))}
-
-
                                     </div>
-
 
                                     <div className="col-span-2 relative mb-3">
                                         <label className="block text-body-lg font-semibold text-[#3c5a99] dark:text-white">
                                             Special Requirements
                                         </label>
+                                        <p className='text-[12px] text-gray-7 mb-2'>{char_Remaining} Characters Remaining</p>
                                         <textarea
                                             value={specialRequirements}
                                             onChange={(e) => setSpecialRequirements(e.target.value)}
+                                            maxLength={800}
                                             placeholder="Enter any special requirements..."
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary"
                                         />
