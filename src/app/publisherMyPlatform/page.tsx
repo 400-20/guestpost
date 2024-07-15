@@ -24,6 +24,7 @@ import { IoPeopleOutline } from "react-icons/io5";
 import { GrStatusInfo } from "react-icons/gr";
 import axios from 'axios';
 import { BASE_URL } from '@/utils/api';
+import { useWebsites } from '@/helpers/WebsiteContext'
 
 
 const Page = () => {
@@ -45,11 +46,10 @@ const Page = () => {
     const [gpSite1, setGpSite1] = useState('');
     const [gpSite2, setGpSite2] = useState('');
     const [gpSite3, setGpSite3] = useState('');
-    const [selectedCategories, setSelectedCategories] = useState('');
+    const [selectedCategories, setSelectedCategories] = useState(["", "", ""]);
     const [specialRequirements, setSpecialRequirements] = useState('');
-    // console.log(selectedCategories);
-    
 
+    const { addWebsite } = useWebsites();
 
 
     const [langs, setLangs] = useState([]);
@@ -87,7 +87,8 @@ const Page = () => {
     const closeAddModal = () => setIsAddModalOpen(false);
     useEffect(() => {
         Aos.init({});
-    }, []);
+    });
+
     const [isRotated, setIsRotated] = useState(false);
 
     const handleAddWebsite = async (event: any) => {
@@ -115,23 +116,31 @@ const Page = () => {
             delivery_time: deliveryTime,
             word_limit: wordLimit,
             gp_sites: [gpSite1, gpSite2, gpSite3],
-            categories: selectedCategories,
+            categories: checkedCategories,
             special_requirements: specialRequirements,
         };
 
-        try {
-            const response = await axios.post(`${BASE_URL}website-detail/`, formData, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-            });
-            console.log('Website added:', response);
+        console.log(formData);
 
-        } catch (error: any) {
-            console.error('Error adding website:', error.response);
-        }
-
+        addWebsite(formData);
+        setProjectUrl("");
+        setSelectedLanguage("");
+        setMaxLinks("");
+        setSelectedLinkType("");
+        setDomainAuthority("");
+        setDomainRating("");
+        setTraffic("");
+        setSpamScore("");
+        setContentPlacementPrice("");
+        setContentCreationPrice("");
+        setLinkInsertPrice("");
+        setDeliveryTime("");
+        setWordLimit("");
+        setGpSite1("");
+        setGpSite2("");
+        setGpSite3("");
+        setSelectedCategories(["", "", ""]);
+        setSpecialRequirements("");
         closeAddModal();
     };
 
@@ -147,6 +156,8 @@ const Page = () => {
             }
         }
     };
+
+
 
     const [charRemaining, setCharRemaining] = useState(800);
     const [char_Remaining, setChar_Remaining] = useState<number>();
@@ -182,27 +193,27 @@ const Page = () => {
                     <div className='h-full w-[100%] border-t-2 border-white flex'>
                         <div className='h-full flex flex-1 flex-col items-center justify-center text-white'>
                             <h3>Websites Approved</h3>
-                            <h3 className='font-bold'>198</h3>
+                            <h3 className='font-bold'>-</h3>
                         </div>
                         <div className='h-full flex flex-1 flex-col items-center justify-center text-white'>
                             <h3>Completion Rate</h3>
-                            <h3 className='font-bold'>92%</h3>
+                            <h3 className='font-bold'>-</h3>
                         </div>
                         <div className='h-full flex flex-1 flex-col items-center justify-center text-white'>
                             <h3>Tasks Completed</h3>
-                            <h3 className='font-bold'>49</h3>
+                            <h3 className='font-bold'>-</h3>
                         </div>
                         <div className='h-full flex flex-1 flex-col items-center justify-center text-white'>
                             <h3>Tasks Rejected</h3>
-                            <h3 className='font-bold'>04</h3>
+                            <h3 className='font-bold'>-</h3>
                         </div>
                         <div className='h-full flex flex-1 flex-col items-center justify-center text-white'>
                             <h3>Tasks In Progress</h3>
-                            <h3 className='font-bold'>00</h3>
+                            <h3 className='font-bold'>-</h3>
                         </div>
                         <div className='h-full flex flex-1 flex-col items-center justify-center text-white'>
                             <h3>Tasks Awaiting</h3>
-                            <h3 className='font-bold'>02</h3>
+                            <h3 className='font-bold'>-</h3>
                         </div>
                     </div>
                 </div>
@@ -226,10 +237,10 @@ const Page = () => {
                             • The article must not be on the subdomain.
                         </p>
                         <p className='text-sm md:text-base'>
-                            • Don't ask the buyer to approve the task.
+                            • Dont ask the buyer to approve the task.
                         </p>
                         <p className='text-sm md:text-base'>
-                            • If the Buyer doesn't approve the task, it will be automatically marked as approved after 3 days.
+                            • If the Buyer doesnt approve the task, it will be automatically marked as approved after 3 days.
                         </p>
                         <p className='text-sm md:text-base'>
                             • If the Buyer requests any changes, make sure you fix it as soon as possible if not the task may be cancelled by the buyer or GuestPostSale.
@@ -238,19 +249,19 @@ const Page = () => {
                             • Before you deliver the task, make sure that all links and target URLs are in place and follow all the instructions.
                         </p>
                         <p className='text-sm md:text-base'>
-                            • Don't try to renegotiate the price with the Buyer.
+                            • Dont try to renegotiate the price with the Buyer.
                         </p>
                         <p className='text-sm md:text-base'>
-                            • Don't exchange email, phone numbers or links to any sites with the Buyer.
+                            • Dont exchange email, phone numbers or links to any sites with the Buyer.
                         </p>
                         <p className='text-sm md:text-base'>
                             • We read all messages and we reserve the right to suspend or ban your account if you fail any of these rules.
                         </p>
                         <p className='text-sm md:text-base'>
-                            • As a website Owner: After delivering the task, if the Buyer doesn't approve it, it will be automatically marked as complete after 3 days and the funds will be Available For Withdrawal.
+                            • As a website Owner: After delivering the task, if the Buyer doesnt approve it, it will be automatically marked as complete after 3 days and the funds will be Available For Withdrawal.
                         </p>
                         <p className='text-sm md:text-base'>
-                            • As a contributor on a website: After delivering the task, if the Buyer doesn't approve it, it will be automatically marked as complete after 3 days and the funds will move to your Balance Awaiting and will be Available For Withdrawal After 21 Days.
+                            • As a contributor on a website: After delivering the task, if the Buyer doesnt approve it, it will be automatically marked as complete after 3 days and the funds will move to your Balance Awaiting and will be Available For Withdrawal After 21 Days.
                         </p>
                         <p className='text-sm md:text-base'>
                             • Payments are made weekly (Every Monday). Please Make sure to request your payment before Sunday Midnight UK Time.
@@ -263,13 +274,15 @@ const Page = () => {
 
                     <p className='text-gray-6 font-bold'>You can add up to 500 website to your account!</p>
                     {isAddModalOpen && (
-                        <div className="modalbackdrop" onClick={closeAddModal}>
+                        <div className="modalbackdrop" >
                             <div className="modalcontent" onClick={e => e.stopPropagation()} data-aos='fade'>
                                 <div className='w-full bg-gray-200 p-3 text-gray-700 text-center rounded-lg font-bold mb-3 flex justify-between items-center'>
                                     Add New Website Info
                                     <ImCancelCircle onClick={closeAddModal} className='text-xl hover:text-red-500 transition-all ease-in-out duration-150' />
                                 </div>
-                                <form className="modalform grid grid-cols-1 sm:grid-cols-2 gap-4" onSubmit={handleAddWebsite}>
+                                <form
+                                    className="modalform grid grid-cols-1 sm:grid-cols-2 gap-4"
+                                    onSubmit={handleAddWebsite}>
 
                                     <div className="relative mb-3">
                                         <label className="block text-body-lg font-semibold text-[#3c5a99] dark:text-white">
@@ -282,6 +295,7 @@ const Page = () => {
                                             type="text"
                                             placeholder="http://www.example.com"
                                             value={projectUrl}
+                                            required
                                             onChange={(e) => setProjectUrl(e.target.value)}
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary active:border-primary"
                                         />
@@ -296,16 +310,18 @@ const Page = () => {
                                         </div>
 
                                         <select
-
-                                            value={selectedLanguage}
+                                            value={selectedLanguage || ""}
                                             onChange={(e) => setSelectedLanguage(e.target.value)}
+                                            required
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary">
+                                            <option value="" disabled>Select a language</option>
                                             {langs.map((lang: any) => (
                                                 <option
                                                     key={lang.id}
                                                     value={lang.id}>{lang.title}</option>
                                             ))}
                                         </select>
+
 
 
                                     </div>
@@ -322,6 +338,7 @@ const Page = () => {
                                             placeholder="Max Links"
                                             value={maxLinks}
                                             onChange={(e) => setMaxLinks(e.target.value)}
+                                            required
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary"
                                         />
                                     </div>
@@ -336,7 +353,10 @@ const Page = () => {
                                         <select
                                             value={selectedLinkType}
                                             onChange={(e) => setSelectedLinkType(e.target.value)}
+                                            required
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary">
+                                            <option value="" disabled>Select a Link Type</option>
+
                                             {selected_LinkType.map((linkType: any) => (
                                                 <option
                                                     key={linkType.id} value={linkType.id}>{linkType.title}</option>
@@ -356,6 +376,7 @@ const Page = () => {
                                             placeholder="Domain Authority"
                                             value={domainAuthority}
                                             onChange={(e) => setDomainAuthority(e.target.value)}
+                                            required
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary"
                                         />
                                     </div>
@@ -372,6 +393,7 @@ const Page = () => {
                                             placeholder="Domain Rating"
                                             value={domainRating}
                                             onChange={(e) => setDomainRating(e.target.value)}
+                                            required
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary"
                                         />
                                     </div>
@@ -388,6 +410,7 @@ const Page = () => {
                                             placeholder="Traffic"
                                             value={traffic}
                                             onChange={(e) => setTraffic(e.target.value)}
+                                            required
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary"
                                         />
                                     </div>
@@ -404,6 +427,7 @@ const Page = () => {
                                             placeholder="Spam Score"
                                             value={spamScore}
                                             onChange={(e) => setSpamScore(e.target.value)}
+                                            required
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary"
                                         />
                                     </div>
@@ -420,6 +444,7 @@ const Page = () => {
                                             placeholder=""
                                             value={contentPlacementPrice}
                                             onChange={(e) => setContentPlacementPrice(e.target.value)}
+                                            required
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary"
                                         />
                                     </div>
@@ -436,6 +461,7 @@ const Page = () => {
                                             placeholder=""
                                             value={contentCreationPrice}
                                             onChange={(e) => setContentCreationPrice(e.target.value)}
+                                            required
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary"
                                         />
                                     </div>
@@ -452,6 +478,7 @@ const Page = () => {
                                             placeholder=""
                                             value={linkInsertPrice}
                                             onChange={(e) => setLinkInsertPrice(e.target.value)}
+                                            required
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary"
                                         />
                                     </div>
@@ -484,6 +511,7 @@ const Page = () => {
                                             placeholder="Delivery Time"
                                             value={deliveryTime}
                                             onChange={(e) => setDeliveryTime(e.target.value)}
+                                            required
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary"
                                         />
                                     </div>
@@ -503,6 +531,7 @@ const Page = () => {
                                             step={250}
                                             value={wordLimit}
                                             onChange={(e) => setWordLimit(e.target.value)}
+                                            required
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary"
                                         />
                                     </div>
@@ -519,6 +548,7 @@ const Page = () => {
                                             placeholder={`${placeholder}/example-1`}
                                             value={gpSite1}
                                             onChange={(e) => setGpSite1(e.target.value)}
+                                            required
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary"
                                         />
                                     </div>
@@ -535,6 +565,7 @@ const Page = () => {
                                             placeholder={`${placeholder}/example-2`}
                                             value={gpSite2}
                                             onChange={(e) => setGpSite2(e.target.value)}
+                                            required
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary"
                                         />
                                     </div>
@@ -551,6 +582,7 @@ const Page = () => {
                                             placeholder={`${placeholder}/example-3`}
                                             value={gpSite3}
                                             onChange={(e) => setGpSite3(e.target.value)}
+                                            required
                                             className="w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-12 py-3 text-dark outline-none transition focus:border-primary"
                                         />
                                     </div>
@@ -564,6 +596,7 @@ const Page = () => {
                                                 <div key={selectedcategory.id} className="flex items-center justify-center mr-2">
                                                     <input
                                                         type="checkbox"
+                                                        required
                                                         className="mr-2 h-4 w-4"
                                                         checked={checkedCategories.includes(selectedcategory.id)}
                                                         value={selectedCategories}

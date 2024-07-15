@@ -647,8 +647,8 @@ bottom: 0px;
     border-radius: 10px;
     max-width: 1200px;
     width: 100%;
-    max-height: 80vh; /* Set a maximum height */
-    overflow-y: auto; /* Allow scrolling if content overflows */
+    max-height: 80vh; 
+    overflow-y: auto; 
     transform: translateY(-100px);
     opacity: 0;
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;

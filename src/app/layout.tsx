@@ -9,6 +9,7 @@ import { Toaster } from 'react-hot-toast';
 import { LayoutProvider } from "@/helpers/LayoutContext";
 import { ProjectProvider } from "@/helpers/CheckedProjectsContext";
 import { SidebarProjectProvider } from "@/helpers/SidebarProjectContext";
+import { WebsiteProvider } from "@/helpers/WebsiteContext";
 
 export default function RootLayout({
   children,
@@ -30,13 +31,13 @@ export default function RootLayout({
         <LayoutProvider>
         <ProjectProvider>
         <SidebarProjectProvider>
-
+        <WebsiteProvider>
 
 
               {loading ? <Loader /> : children}
 
 
-
+              </WebsiteProvider>
         </SidebarProjectProvider>
         </ProjectProvider>
         </LayoutProvider>

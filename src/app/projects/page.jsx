@@ -42,7 +42,11 @@ const AllMyProjects = () => {
     const [currentProject, setCurrentProject] = useState(null);
 
     const openAddModal = () => setIsAddModalOpen(true);
-    const closeAddModal = () => setIsAddModalOpen(false);
+    const closeAddModal = () => {
+        setProjectName("");
+        setProjectUrl("");
+        setIsAddModalOpen(false);
+    }
 
     const openEditModal = (project) => {
         setCurrentProject(project);
@@ -66,25 +70,6 @@ const AllMyProjects = () => {
         setIsCheckboxChecked(!isCheckboxChecked);
     };
 
-    // const fetchProjects = async () => {
-    //     const token = localStorage.getItem('login_access_token');
-    //     if (!token) {
-    //         alert('You need to log in first.');
-    //         return;
-    //     }
-    //     try {
-    //         const response = await axios.get('http://172.16.16.22:8000/dashboard/projects/', {
-    //             headers: {
-    //                 'Authorization': `Bearer ${token}`,
-    //                 'Content-Type': 'application/json',
-    //             },
-    //         });
-    //         setProjects(response.data);
-    //         console.log('Available projects:', response.data);
-    //     } catch (error) {
-    //         console.error('Error fetching projects:', error.response);
-    //     }
-    // };
 
     useEffect(() => {
         fetchProjects();
@@ -115,19 +100,10 @@ const AllMyProjects = () => {
         }
 
         closeAddModal();
-        // setTimeout(() => {
-        //     window.location.reload();
-        // }, 0);
+
     };
     const [addEditText, setAddEditText] = useState(false)
 
-    // useEffect(() => {
-    //     const successState = localStorage.getItem('successState');
-    //     if (successState) {
-    //         setAddEditText(true);
-    //         localStorage.removeItem('successState');
-    //     }
-    // }, []);
 
     const handleEditProject = async (event) => {
         event.preventDefault();
@@ -156,19 +132,11 @@ const AllMyProjects = () => {
         }
 
         closeEditModal();
-        // setTimeout(() => {
-        //     window.location.reload();
-        // }, 0);
+
     };
 
 const [addDeleteText, setAddDeleteText] = useState(false)
-// useEffect(() => {
-//     const successDelState = localStorage.getItem('successDelState');
-//     if (successDelState) {
-//         setAddDeleteText(true);
-//         localStorage.removeItem('successDelState');
-//     }
-// }, []);
+
     const handleDeleteProject = async (event) => {
         event.preventDefault();
 
@@ -297,6 +265,7 @@ const [addDeleteText, setAddDeleteText] = useState(false)
                             </div>
                             <button
                                 type='submit'
+
                                 className='bg-[#2c7be5] hover:bg-primary transition-all ease-in-out duration-300 px-5 text-white py-2 rounded-lg flex items-center justify-center gap-2'
                             > <IoMdAddCircle className='text-2xl' /><span className='font-medium'>Create project</span></button>
                         </form>
@@ -366,7 +335,7 @@ const [addDeleteText, setAddDeleteText] = useState(false)
             <div className='flex flex-wrap gap-4 w-full'>
                 {projects.map(project => (
                     <div key={project.id} className='h-full flex'>
-                        <div className='h-[240px] w-[400px] bg-white shadow-1 hover:shadow-xl my-4 rounded-lg transition-all ease-in-out duration-300 flex flex-col'>
+                        <div className='h-[120px] w-[400px] bg-white shadow-1 hover:shadow-xl my-4 rounded-lg transition-all ease-in-out duration-300 flex flex-col'>
                             <div className='h-[60px] w-full bg-gradient-to-r from-[#2c7be5] to-primary rounded-t-lg justify-between flex items-center px-5'>
                                 <h4 className='text-white font-medium '>{project.title}</h4>
                                 <h4 className='text-white font-medium flex gap-2'>
@@ -396,8 +365,8 @@ const [addDeleteText, setAddDeleteText] = useState(false)
                                     <Link title="Delete This Project" id="t-1" placement='top'><MdDeleteOutline className='text-2xl' onClick={() => openDeleteModal(project)} /></Link>
                                 </h4>
                             </div>
-                            <div className='h-[60px] w-full bg-white to-primary rounded-t-lg justify-between flex items-center px-5'>
-                                <h4 className='text-black font-medium '>Guest posting</h4>
+                            <div className='h-[60px] w-full bg-white to-primary rounded-t-lg justify-between flex items-center px-5 rounded-b-lg '>
+                                <h4 className='text-black font-medium '>Guest Posting</h4>
                                 <div className='text-black font-medium flex gap-1'>
                                     <Link title="Number of tasks not started" id="t-2" placement='top'><div className='h-6 w-6 rounded-md bg-[#d5e5fa] flex items-center justify-center text-sm'>0</div></Link>
                                     <Link title="Number of tasks in progress" id="t-3" placement='top'><div className='h-6 w-6 rounded-md bg-[#e3e6ea] flex items-center justify-center text-sm'>0</div></Link>
@@ -407,7 +376,7 @@ const [addDeleteText, setAddDeleteText] = useState(false)
                                     <Link title="Number of tasks rejected" id="t-7" placement='top'><div className='h-6 w-6 rounded-md bg-[#fad7dd] flex items-center justify-center text-sm'>0</div></Link>
                                 </div>
                             </div>
-                            <div className='h-[60px] w-full bg-white to-primary rounded-t-lg justify-between flex items-center px-5'>
+                            {/* <div className='h-[60px] w-full bg-white to-primary rounded-t-lg justify-between flex items-center px-5'>
                                 <h4 className='text-black font-medium '>Digital PR & SEO</h4>
                                 <div className='text-black font-medium flex gap-1'>
                                     <Link title="Number of tasks not started" id="t-2" placement='top'><div className='h-6 w-6 rounded-md bg-[#d5e5fa] flex items-center justify-center text-sm'>0</div></Link>
@@ -428,7 +397,7 @@ const [addDeleteText, setAddDeleteText] = useState(false)
                                     <Link title="Number of tasks completed" id="t-6" placement='top'><div className='h-6 w-6 rounded-md bg-[#ccf6e4] flex items-center justify-center text-sm'>0</div></Link>
                                     <Link title="Number of tasks rejected" id="t-7" placement='top'><div className='h-6 w-6 rounded-md bg-[#fad7dd] flex items-center justify-center text-sm'>0</div></Link>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 ))}
